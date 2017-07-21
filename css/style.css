@@ -38,6 +38,12 @@
       padding-bottom: 20vh;
       font-size:18px;
     }
+    .img-container{
+    	display:inline-block;
+    	width: 500px;
+    	padding-right: 60%;
+    }
+
     .panel:first-child {
       /* padding-top: 35vh; */
       margin-top: -10vh;
