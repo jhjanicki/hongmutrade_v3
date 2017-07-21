@@ -44,9 +44,8 @@
         <p>Only  <span class='red'>8 out of 33</span> Hongmu species are protected under CITES.</p>
       </div>
       <div class="panel">
-      	<div class="section"></div>
         <h1> Demand and Transit Countries </h1><br>
-	    <p>Because most hongmu species are not protected under CITES, and because the main demand side country, China, and key trade and processing hub Vietnam, do not prohibit the import of illegally harvested and/or traded timber, illegal wood from these species is legally placed in the markets there everyday.</p>    	
+	    <p  class="section">Because most hongmu species are not protected under CITES, and because the main demand side country, China, and key trade and processing hub Vietnam, do not prohibit the import of illegally harvested and/or traded timber, illegal wood from these species is legally placed in the markets there everyday.</p>    	
       </div>
       <div class="panel">
       	
@@ -1072,7 +1071,7 @@ function joinData(thisFeatures, thisData, DataArray){
 				var thisclass = ".asiancountries";
 				
 				var barsSvg = svg.append('g').attr('id','bars2').style("opacity",0);
-				barsSvg.attr("transform","translate("+(width-500)+",50)");
+				barsSvg.attr("transform","translate("+(width-400)+",20)");
 				chart2 = d3.custom.barChart();
 				var selectedYear = '2009';
 				chart2.year(selectedYear);
@@ -1173,7 +1172,7 @@ function joinData(thisFeatures, thisData, DataArray){
 				
 				
 				var barsSvg = svg.append('g').attr('id','bars3').style("opacity",0);
-				barsSvg.attr("transform","translate("+(width-500)+",50)");
+				barsSvg.attr("transform","translate("+(width-400)+",20)");
 				chart3 = d3.custom.barChart();
 				var selectedYear = '2009';
 				chart3.year(selectedYear);

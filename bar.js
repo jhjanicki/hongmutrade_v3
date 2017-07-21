@@ -2,7 +2,7 @@ d3.custom = {};
 d3.custom.barChart = function module(){
 
 	var margin = {top:20, right:20, bottom:120, left:80};
-	var width = 500;
+	var width = 400;
 	var height = 300;
 	var gap = 0;
 	var _index = 0;
