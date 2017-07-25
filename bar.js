@@ -4,7 +4,6 @@ d3.custom.barChart = function module(){
 	var margin = {top:20, right:20, bottom:120, left:80};
 	var width = 400;
 	var height = 300;
-	var gap = 0;
 	var _index = 0;
 	
 	var svg;
@@ -18,7 +17,7 @@ d3.custom.barChart = function module(){
 	function exports(_selection) {
         _selection.each(function(_data) {
         
-        	console.log(_data);
+        	// console.log(_data);
         
         	var chartW = width - margin.left - margin.right,
                 chartH = height - margin.top - margin.bottom;
@@ -31,8 +30,8 @@ d3.custom.barChart = function module(){
 			    .nice()
 			    .range([chartH,0]);
 			    
-			console.log(y.domain());
-			console.log(year);
+			// console.log(y.domain());
+// 			console.log(year);
 			    
 			var xAxis = d3.svg.axis()
                     .scale(x)
@@ -43,7 +42,6 @@ d3.custom.barChart = function module(){
                     .ticks(8)
                     .orient("left");
             
-             var barW = width / _data.length;
              
              if (!svg) {
                 svg = d3.select(this)
@@ -76,8 +74,8 @@ d3.custom.barChart = function module(){
                 .transition()
                 .call(yAxis);
             
-            var gapSize = x.rangeBand() / 100 * gap;
-            var barW = x.rangeBand() - gapSize;
+            
+            var barW = x.rangeBand();
 			
 
             var bars = svg.select(".chart-group")
