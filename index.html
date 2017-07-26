@@ -97,7 +97,7 @@
 					<i class="fa fa-arrow-right" aria-hidden="true"></i>
 				</button>
 			</div>
-			<p class="orange">Sequence through the years to see the change in import volume between 2000 and 2016 from West African countries.</p>
+			<p class="orange">Sequence through the years to see the change in import volume between 2009 and 2017 from Southeast Asian countries.</p>
 			<p> Now the main Southeast Asian hongmu species targeted are <span class='red'>Padauk</span> <i>Pterocarpus macrocarpus/pedatus</i>, and <span class='red'>Burmese Rosewood</span><i>Dalbergia oliveri/ bariensis</i>, with Laos and Myanmar providing most of the
 	supply. Both species urgently need CITES protection. </p>
 			<h2>Regional Negative Impacts</h2>
@@ -116,7 +116,7 @@
 				<i class="fa fa-arrow-right" aria-hidden="true"></i>
 			</button>
 		</div>
-		<p class="orange">Sequence through the years to see the change in import volume between 2009 and 2016 from Central American countries.</p>
+		<p class="orange">Sequence through the years to see the change in import volume between 2009 and 2017 from Central American countries.</p>
 		
       </div>
        <div class="panel">
@@ -147,6 +147,9 @@ Appendix III to Appendix II.</p>
 	
 	<!-- D3.geo -->
     <script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
+    
+    <!-- D3 legend -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.10.0/d3-legend.js'></script>
     
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -360,6 +363,7 @@ window.onload = function(){
 	    	d3.selectAll("path.africancountries").transition().duration(100).style('opacity',1);
 		    d3.selectAll("path.bgcountries").transition().duration(100).style('opacity',1);
 		    d3.selectAll(".wafricatext").transition().duration(100).style('opacity',1);
+		    d3.selectAll(".legendMapAfrica").transition().duration(100).style('opacity',1);
 		    d3.selectAll("#bars").transition().duration(100).style('opacity',1);
 		    		
 		    d3.csv("data/africa_new.csv", function(error, data) {
@@ -374,16 +378,14 @@ window.onload = function(){
 	    	d3.selectAll("path.africancountries").transition().duration(100).style('opacity',0);
 		    d3.selectAll("path.bgcountries").transition().duration(100).style('opacity',0);
 		    d3.selectAll(".wafricatext").transition().duration(100).style('opacity',0);
+		    d3.selectAll(".legendMapAfrica").transition().duration(100).style('opacity',0);
 		    d3.selectAll("#bars").transition().duration(100).style('opacity',0);
 	    }
 	    
 	    
 	    if (scrollTop > topArray[3]){
 		    	
-		       d3.selectAll("path.africancountries")
-		    		.transition()
-		    		.duration(100)
-		    		.style('opacity',0);
+		       d3.selectAll("path.africancountries").transition().duration(100).style('opacity',0);
 		       d3.selectAll("path.bgcountries")
 		    		.transition()
 		    		.duration(100)
@@ -392,6 +394,7 @@ window.onload = function(){
 		    		.transition()
 		    		.duration(100)
 		    		.style('opacity',0);
+		    	d3.selectAll(".legendMapAfrica").transition().duration(100).style('opacity',0);
 		    	d3.selectAll("#bars")
 		    		.transition()
 		    		.duration(100)
@@ -422,6 +425,7 @@ window.onload = function(){
 		    		.transition()
 		    		.duration(100)
 		    		.style('opacity',1);
+		       d3.selectAll(".legendMapAsia").transition().duration(100).style('opacity',1);
 	    	
 	    }else{
 	    	
@@ -443,10 +447,11 @@ window.onload = function(){
 		    		.transition()
 		    		.duration(100)
 		    		.style('opacity',0);
+		    d3.selectAll(".legendMapAsia").transition().duration(100).style('opacity',0);
 	    }
 	    
 	    if (scrollTop > topArray[4]){	
-	    		
+	    	   d3.selectAll(".legendMapAsia").transition().duration(100).style('opacity',0);
 	    	   d3.selectAll("#bars2")
 		    		.transition()
 		    		.duration(100)
@@ -470,7 +475,7 @@ window.onload = function(){
 		    		.transition()
 		    		.duration(100)
 		    		.style('opacity',1);
-		    		
+		    	d3.selectAll(".legendMapLatin").transition().duration(100).style('opacity',1);
 		    	d3.csv("data/latin_new.csv", function(error, data) {
 				chart3.year(LatinYear);
 				d3.select("#bars3")
@@ -508,7 +513,7 @@ window.onload = function(){
 		    		.transition()
 		    		.duration(100)
 		    		.style('opacity',0);
-		    		
+		    	d3.selectAll(".legendMapLatin").transition().duration(100).style('opacity',0);
 		    	d3.selectAll("#bars3")
 		    		.transition()
 		    		.duration(100)
@@ -682,7 +687,7 @@ function createLine(svg){
 	  		
 	  		var totalLength = [path[0][0].getTotalLength(), path[0][1].getTotalLength(),path[0][2].getTotalLength(),path[0][3].getTotalLength(),path[0][4].getTotalLength()];
 	
-			console.log(totalLength);
+			// console.log(totalLength);
 			
 			
 			   d3.select(path[0][0])
@@ -778,8 +783,9 @@ var projection = d3.geo.mercator()
 				
 		var newFeatures = [];
 		myfeatures.forEach(function(d){
+			console.log(d.properties.name);
 			if(d.properties.hasOwnProperty("value")){
-				console.log(d.properties.name);
+				//console.log(d.properties.name);
 				newFeatures.push(d);
 			}
 			
@@ -790,7 +796,7 @@ var projection = d3.geo.mercator()
             	return b.properties.value - a.properties.value;
           });
 
-	// 	console.log(newFeatures);
+	 	console.log(newFeatures);
 		 
 		// console.log(newFeatures);
 		var bubbles = svg.append("g").classed("bubbleG","true");
@@ -831,16 +837,16 @@ var bubbleMapState = 'map'; // map or bar
 
 			var x = d3.scale.ordinal()
 					.domain(data.map(function(d) { return d.properties.name; }))
-					.rangeRoundBands([0, chartW], .4);
+					.rangeBands([0, chartW], .3);
 			
-			var y = d3.scale.linear()
-					.domain([0,1097805])
-					
-					.range([chartH,0]);
+			// var y = d3.scale.linear()
+// 					.domain([0,1097805])
+// 					
+// 					.range([chartH,0]);
 
-			// var y = d3.scale.log()
-// 					.range([chartH,0])
-// 					.domain([1,1097805]);
+			var y = d3.scale.log()
+					.range([chartH,0])
+					.domain([1,1097805]);
 					
 
 			var xAxis = d3.svg.axis()
@@ -850,6 +856,9 @@ var bubbleMapState = 'map'; // map or bar
 			var yAxis = d3.svg.axis()
 						.scale(y)
 						.ticks(8)
+						.tickFormat(function (d) {
+								return y.tickFormat(4,d3.format(",d"))(d)
+						})
 						.orient("left");
 			
 			var barW = width / data.length;
@@ -871,15 +880,21 @@ var bubbleMapState = 'map'; // map or bar
 					.call(xAxis)
 					.style('opacity',0)
 					.selectAll("text")	
-					.style('font-size','14px')
+					.style('font-size','12px')
 					.style("text-anchor", "end")
-					.attr("dx", "-.8em")
-					.attr("dy", ".15em")
+					.attr("dx", "-0.40em")
+					.attr("dy", ".10em")
 					.attr("transform", function(d) {
 						return "rotate(-65)" 
 						})
 					  .style('opacity',0);
-
+					
+					
+					// .attr("dx", "-.8em")
+// 					.attr("dy", ".15em")
+// 					.attr("transform", function(d) {
+// 						return "rotate(-65)" 
+// 						})
 
 				barsG.select(".bubblebar-y-axis-group.axis")
 					.call(yAxis)
@@ -901,6 +916,18 @@ var bubbleMapState = 'map'; // map or bar
 					.attr("fill","#2166ac")
 					.style('opacity',0);
 			   
+				
+				barsG.select(".bubblebar-x-axis-group.axis").append("g")
+			      .attr("class", "barxlabelG")
+			      .append("text")
+					  .attr("class", "barxlabel")
+					  .attr("x", 0)
+					  .attr("y", 120)
+					  .text("Hongmu Export by Volume 2009-2017, cubic meters")
+					  .style('font-size','20px');
+					  
+			 
+				
 				
 
 			// 
@@ -1019,8 +1046,8 @@ var projection = d3.geo.mercator()
 	
 	
 var background_countries_china = features.filter(function(d){
-	 	return  d.properties.name == 'Mongolia' || d.properties.name == 'India' || d.properties.name == 'Thailand' || d.properties.name == 'Nepal' || d.properties.name == 'Taiwan' || d.properties.name == 'Myanmar' || d.properties.name == 'Bhutan' || d.properties.name == 'Bangladesh' || d.properties.name == 'Laos' || d.properties.name == 'Cambodia' 
-	 	|| d.properties.name == 'Kazakhstan' || d.properties.name == 'Russia' || d.properties.name == 'North Korea' || d.properties.name == 'South Korea' || d.properties.name =='Kyrgyzstan' || d.properties.name =='Tajikistan' || d.properties.name =='Afghanistan' || d.properties.name =='Turkmenistan' || d.properties.name =='Pakistan' || d.properties.name =='Uzbekistan' || d.properties.name =='Japan';
+	 	return  d.properties.name == 'Mongolia' || d.properties.name == 'India' || d.properties.name == 'Thailand' || d.properties.name == 'Nepal' || d.properties.name == 'Taiwan' || d.properties.name == 'Myanmar' || d.properties.name == 'Bhutan' || d.properties.name == 'Bangladesh' || d.properties.name == 'Laos' || d.properties.name == 'Cambodia' || d.properties.name == 'Indonesia' || d.properties.name == 'Thailand' || d.properties.name == 'Philippines' 
+	 	|| d.properties.name == 'Kazakhstan' || d.properties.name == 'Russia' || d.properties.name == 'North Korea' || d.properties.name == 'South Korea' || d.properties.name =='Kyrgyzstan' || d.properties.name =='Tajikistan' || d.properties.name =='Afghanistan' || d.properties.name =='Turkmenistan' || d.properties.name =='Pakistan' || d.properties.name =='Uzbekistan' || d.properties.name =='Japan' || d.properties.name =='Malaysia' || d.properties.name =='Iran';
 	 });
 	 
 	var bg_china = svg.append('g');
@@ -1034,6 +1061,7 @@ var background_countries_china = features.filter(function(d){
 	            .style("stroke-width", "1")
 	            .style("fill", "#eaeaea")
 	            .style("opacity", 0);
+	
 
 } //end createChinaMap 
     
@@ -1082,7 +1110,21 @@ function createAfricaMap(svg){
 	d3.csv("data/africa_new.csv", function(error, data) {
 		var myfeatures= joinData(west_africa, data, DataArray);
 		
-		var colorScale = makeColorScale(myfeatures);
+		var extent = [0,10000,50000,100000,200000,240000];
+		var colorScale = makeColorScale(myfeatures,extent);
+		
+		var africaLegend = svg.append("g")
+				  .attr("class", "legendMapAfrica")
+				  .attr("transform", "translate(20,20)");
+
+			var legend = d3.legend.color() 
+			  .labelFormat(d3.format(".0f"))
+			  // .labels(d3.legendHelpers.thresholdLabels)
+			  .scale(colorScale);
+
+			svg.select(".legendMapAfrica")
+			  .call(legend)
+			  .style('opacity',0);
 		
 		var africaMap = svg.append('g');
 		var westAfricaCountries = africaMap.selectAll(".africancountries")
@@ -1119,7 +1161,7 @@ function createAfricaMap(svg){
 		var thisclass = ".africancountries";
 		
 		var barsSvg = svg.append('g').attr('id','bars').style('opacity',0);
-		barsSvg.attr("transform","translate("+(width-500)/2+",80)");
+		barsSvg.attr("transform","translate("+(width-400)+",80)");
 		chart = d3.custom.barChart();
 		var selectedYear = '2009';
 		chart.year(selectedYear);
@@ -1127,14 +1169,14 @@ function createAfricaMap(svg){
 				.datum(data)
 				.call(chart);
 		      
-	    	createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data);
+	    	createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data,extent);
 		
 	});
 
 }
 
 
-function createSequenceControls(DataArray, attributeIndex, expressed, thisfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data){
+function createSequenceControls(DataArray, attributeIndex, expressed, thisfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data,extent){
 
 
 
@@ -1180,7 +1222,7 @@ function createSequenceControls(DataArray, attributeIndex, expressed, thisfeatur
 				.call(chart3);
               
 
-            changeAttribute(expressed, thisfeatures, thisclass)
+            changeAttribute(expressed, thisfeatures, thisclass,extent)
         })
 
         $(buttonIDBackward).on("click", function(){
@@ -1222,15 +1264,15 @@ function createSequenceControls(DataArray, attributeIndex, expressed, thisfeatur
 				.datum(data)
 				.call(chart3);
 
-              changeAttribute(expressed, thisfeatures, thisclass)
+              changeAttribute(expressed, thisfeatures, thisclass,extent)
         })
 }
 
 //dropdown change listener handler
-function changeAttribute(thisexpressed, thisfeatures, thisclass){
+function changeAttribute(thisexpressed, thisfeatures, thisclass,extent){
 	/* console.log("peeg"); */
     //recreate the color scale
-    var colorScale = makeColorScale(thisfeatures);
+    var colorScale = makeColorScale(thisfeatures,extent);
 
     //recolor enumeration units
     d3.selectAll(thisclass)
@@ -1240,13 +1282,19 @@ function changeAttribute(thisexpressed, thisfeatures, thisclass){
 };
 
 
-function makeColorScale(data){
+function makeColorScale(data,extent){
 	
-    //create color scale generator
-    var colorScale = d3.scale.threshold()
-        .domain([0,5000,20000,40000,60000])
+	
+	
+	var colorScale = d3.scale.threshold()
+        .domain(extent)
         .range(['#fef0d9','#fdd49e','#fdbb84','#fc8d59','#e34a33','#b30000']);
+    //create color scale generator
+    // var colorScale = d3.scale.quantize()
+//         .domain(extent)
+//         .range(['#fef0d9','#fdd49e','#fdbb84','#fc8d59','#e34a33','#b30000']);
         /* .range(['#2166ac','#67a9cf','#d1e5f0','#fddbc7','#ef8a62','#b2182b']); */
+        
 
     return colorScale;
 };
@@ -1260,7 +1308,7 @@ function choropleth(expressed, props, colorScale){
     if (val){
         return colorScale(val);
     } else {
-        return "#CCC";
+        return "#fef0d9";
     };
 };
 
@@ -1336,8 +1384,21 @@ function joinData(thisFeatures, thisData, DataArray){
 					
 		 d3.csv("data/asia_new.csv", function(error, data) {
 			var myfeatures= joinData(SE_Asia, data, DataArray);
-		
-			var colorScale = makeColorScale(myfeatures);
+			var extent = [0,10000,50000,200000,400000,450000];
+			var colorScale = makeColorScale(myfeatures,extent);
+			
+			var asiaLegend = svg.append("g")
+				  .attr("class", "legendMapAsia")
+				  .attr("transform", "translate(20,20)");
+
+			var legend = d3.legend.color() 
+			  .labelFormat(d3.format(".0f"))
+			  // .labels(d3.legendHelpers.thresholdLabels)
+			  .scale(colorScale);
+
+			svg.select(".legendMapAsia")
+			  .call(legend)
+			  .style('opacity',0);
 		
 			var asiaMap = svg.append('g');
 		
@@ -1382,15 +1443,12 @@ function joinData(thisFeatures, thisData, DataArray){
 						.datum(data)
 						.call(chart2);
 			
-				createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data);
+				createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data,extent);
 		
 		});
 				
-		
-				
-		 
-
 	}  
+	
 
 
 
@@ -1435,8 +1493,21 @@ function joinData(thisFeatures, thisData, DataArray){
 	 
 		 d3.csv("data/latin_new.csv", function(error, data) {
 			var myfeatures= joinData(LatinAmerica, data, DataArray);
-		
-			var colorScale = makeColorScale(myfeatures);
+		    var extent = [0,1000,5000,10000,50000,60000];
+			var colorScale = makeColorScale(myfeatures, extent);
+			
+			var africaLegend = svg.append("g")
+				  .attr("class", "legendMapLatin")
+				  .attr("transform", "translate(20,20)");
+
+			var legend = d3.legend.color() 
+			  .labelFormat(d3.format(".0f"))
+			  // .labels(d3.legendHelpers.thresholdLabels)
+			  .scale(colorScale);
+
+			svg.select(".legendMapLatin")
+			  .call(legend)
+			  .style('opacity',0);
 		
 			var latinMap = svg.append('g');
 		
@@ -1483,7 +1554,7 @@ function joinData(thisFeatures, thisData, DataArray){
 						.datum(data)
 						.call(chart3);
 			
-				createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data);
+				createSequenceControls(DataArray, attributeIndex, expressed, myfeatures, buttonIDForward, buttonIDBackward, yearID, thisclass,data,extent);
 		
 		});
 	

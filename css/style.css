@@ -17,6 +17,7 @@
 	}
     body { 
       overflow: hidden;
+	  font-family: 'Asar', serif;
    	}
    	#content{
 	   	overflow-x: hidden;   	
@@ -104,9 +105,7 @@
 	.marginTop50{
 		margin-top: 50px;
 	}
-	body{
-	  font-family: 'Asar', serif;
-	}
+
 	.arrow {
 	  text-align: left;
 	  margin: 8% 0;
